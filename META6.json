@@ -7,7 +7,7 @@
     "license" : "ISC",
     "perl" : "6.d",
     "provides" : {
-        "Antlia::CLI" : "lib/Antlia/CLI.rakumod",
+        "Antlia::CLI" : "lib/Antlia/CLI.rakumod"
     },
     "depends" : [
         "Terminal::Table:auth<github:araraloren>"

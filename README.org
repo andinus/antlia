@@ -7,6 +7,14 @@
 | Source          | https://git.tilde.institute/andinus/antlia |
 | GitHub (mirror) | https://github.com/andinus/antlia          |
 
+* Demo
+
+This was recorded with ~asciinema~.
+
+[[https://asciinema.org/a/410736][https://asciinema.org/a/410736.png]]
+
++ Antlia v0.1.0: https://asciinema.org/a/410736
+
 * Installation
 
 Antlia is released to CPAN, you can get it from there or install it from
