@@ -66,10 +66,15 @@ Press enter to play another round.
 
 *** players
 
-Number of players. Default is 2, should be an integer equal to 2.
-Support for more than 2 players will be added later.
+Number of players. Default is 2, should be an integer equal to or
+greater than 2.
 
 * News
+
+** v0.1.1 - 2021-05-01
+
++ Added support for more than 2 players.
++ Prints a scorecard after the last round.
 
 ** v0.1.0 - 2021-04-29
 
