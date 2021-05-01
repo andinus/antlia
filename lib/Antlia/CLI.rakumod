@@ -1,4 +1,5 @@
 use Terminal::Boxer;
+use Terminal::ANSIColor;
 
 class Player is export {
     has Str $.name;
@@ -16,6 +17,9 @@ class Player is export {
     }
 }
 
+my Bool $end-loop = False;
+signal(SIGINT).tap({$end-loop = True;});
+
 #| text based Rock paper scissors game
 multi sub MAIN(
     Int :$players where * >= 2 = 2, #= Number of players (default: 2)
@@ -27,6 +31,7 @@ multi sub MAIN(
     for 1 .. $players {
         push @players, Player.new(name => prompt("[Player $_] Name: ").trim);
     }
+    print "\n";
 
     my %score-against = (
         rock => "scissor",
@@ -36,19 +41,30 @@ multi sub MAIN(
 
     my Int $round = 0;
     loop {
-        say "[Round {++$round}]";
-
         for @players -> $player {
             $player.throw = <rock scissor paper>.pick[0];
         }
 
         for @players -> $player {
             for @players -> $player-against {
-                $player.score += 1 if $player-against.throw eq %score-against{$player.throw};
+                $player.score += 1 if $player-against.throw
+                                   eq %score-against{$player.throw};
             }
         }
 
+        say "[Round {++$round}]";
         say ss-box(:4col, :20cw, @players.map(*.throw-art));
+
+        last if $end-loop;
+    }
+
+    with @players.sort(*.score).reverse -> @players-sorted {
+        my @scorecard = <Name Score>;
+        for @players-sorted -> $player {
+            push @scorecard, $player.name, $player.score.Str;
+        }
+        say ss-box(:2col, :40cw, @scorecard);
+        say colored(@players-sorted[0].name, 'cyan') ~ " wins!";
     }
 }
 
