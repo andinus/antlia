@@ -20,6 +20,7 @@ class Player is export {
 #| text based Rock paper scissors game
 multi sub MAIN(
     Bool :$autoname, #= Autoname the players
+    Int :$rounds, #= Number of rounds (default: Inf)
     Int :$players where * >= 2 = 2, #= Number of players (default: 2)
 ) is export {
     say "Antlia - text based Rock paper scissors game";
@@ -31,8 +32,8 @@ multi sub MAIN(
     } else {
         push @players, Player.new(name => prompt("[Player $_] Name: ").trim)
                              for 1 .. $players;
+        print "\n";
     }
-    print "\n";
 
     my %score-against = (
         rock => "scissor",
@@ -61,7 +62,9 @@ multi sub MAIN(
 
         say "[Round {++$round}]";
         say ss-box(col => $columns, :20cw, @players.map(*.throw-art));
+
         last if $end-loop;
+        last if ($round == * with $rounds);
     }
 
     with @players.sort(*.score).reverse -> @players-sorted {
