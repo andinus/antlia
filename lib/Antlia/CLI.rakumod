@@ -22,14 +22,18 @@ signal(SIGINT).tap({$end-loop = True;});
 
 #| text based Rock paper scissors game
 multi sub MAIN(
+    Bool :$autoname, #= Autoname the players
     Int :$players where * >= 2 = 2, #= Number of players (default: 2)
 ) is export {
     say "Antlia - text based Rock paper scissors game";
     say "--------------------------------------------\n";
 
     my Player @players;
-    for 1 .. $players {
-        push @players, Player.new(name => prompt("[Player $_] Name: ").trim);
+    if $autoname {
+        push @players, Player.new(name => "Player $_") for 1 .. $players;
+    } else {
+        push @players, Player.new(name => prompt("[Player $_] Name: ").trim)
+                             for 1 .. $players;
     }
     print "\n";
 
