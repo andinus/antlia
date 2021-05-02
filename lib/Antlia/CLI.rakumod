@@ -17,9 +17,6 @@ class Player is export {
     }
 }
 
-my Bool $end-loop = False;
-signal(SIGINT).tap({$end-loop = True;});
-
 #| text based Rock paper scissors game
 multi sub MAIN(
     Bool :$autoname, #= Autoname the players
@@ -44,6 +41,12 @@ multi sub MAIN(
     );
 
     my Int $round = 0;
+    my Int $columns = @players.elems < 4 ?? (@players.elems < 3 ?? 2 !! 3)
+                       !! (@players.elems %% 4 ?? 4
+                           !! (@players.elems %% 3 ?? 3 !! 4));
+
+    my Bool $end-loop = False;
+    signal(SIGINT).tap({$end-loop = True;});
     loop {
         for @players -> $player {
             $player.throw = <rock scissor paper>.pick[0];
@@ -57,8 +60,7 @@ multi sub MAIN(
         }
 
         say "[Round {++$round}]";
-        say ss-box(:4col, :20cw, @players.map(*.throw-art));
-
+        say ss-box(col => $columns, :20cw, @players.map(*.throw-art));
         last if $end-loop;
     }
 
