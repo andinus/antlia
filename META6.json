@@ -1,7 +1,7 @@
 {
     "name" : "antlia",
     "auth" : "zef:andinus",
-    "version" : "0.1.1",
+    "version" : "0.1.2",
     "description" : "Antlia is a text based Rock paper scissors game",
     "authors" : [ "Andinus <andinus@nand.sh>" ],
     "license" : "ISC",
@@ -11,7 +11,8 @@
     },
     "depends" : [
         "Terminal::Table:auth<github:araraloren>",
-        "Terminal::ANSIColor"
+        "Terminal::ANSIColor",
+        "Terminal::Boxer"
     ],
     "resources" : [
         "rock/1", "rock/2", "paper/1", "paper/2", "scissor/1", "scissor/2"
